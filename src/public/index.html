@@ -1,1 +1,117 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>GeoInclusivo</title><link rel="stylesheet" href="/css/style.css"/></head><body><header class="header"><h1>GeoInclusivo</h1><p>Quiz geográfico acessível para aprender de forma simples e interativa.</p></header><main class="container"><section class="card"><h2>Iniciar Quiz</h2><label for="nome">Seu nome</label><input id="nome" type="text" placeholder="Digite seu nome"/><label for="email">E-mail opcional</label><input id="email" type="email" placeholder="Digite seu e-mail"/><label for="categoria">Categoria</label><select id="categoria"><option value="">Todas as categorias</option></select><button id="btnIniciar">Iniciar</button></section><section id="quiz" class="card hidden"><h2>Perguntas</h2><form id="quizForm"></form><button id="btnFinalizar">Finalizar Quiz</button></section><section id="resultado" class="card hidden" aria-live="polite"></section><section class="card"><h2>Histórico de Tentativas</h2><button id="btnHistorico">Atualizar histórico</button><div id="historico"></div></section></main><script src="/js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoInclusivo | Quiz Geográfico Acessível</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-content">
+      <button class="brand" onclick="app.home()" aria-label="Voltar para o início">
+        <span class="brand-globe">🌍</span>
+        <span><strong>GeoInclusivo</strong><small>Quiz Geográfico Acessível</small></span>
+      </button>
+      <nav class="steps" aria-label="Etapas">
+        <span id="s-home" class="active">1. Início</span>
+        <span id="s-cat">2. Categorias</span>
+        <span id="s-quiz">3. Perguntas</span>
+        <span id="s-result">4. Resultado</span>
+      </nav>
+      <div class="author"><span>Feito por</span><b>Gustavo Dias Lopes</b></div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section id="home" class="screen active-screen">
+      <div class="home-grid">
+        <article class="card hero">
+          <span class="badge">Educação • Inclusão • Geografia</span>
+          <h1>Bem-vindo ao <span>GeoInclusivo!</span></h1>
+          <p>Aprenda geografia de um jeito simples, visual, acessível e interativo.</p>
+
+          <div class="illustration" role="img" aria-label="Pessoas aprendendo geografia em um parque">
+            <span class="sun">☀️</span><span class="cloud c1"></span><span class="cloud c2"></span>
+            <div class="people"><span>👴</span><span>👧🏽</span><span>🧒🏾</span><span>👵🏻</span></div>
+            <div class="grass"></div>
+          </div>
+
+          <div class="form-grid">
+            <label>Seu nome<input id="nome" placeholder="Digite seu nome" autocomplete="name" /></label>
+            <label>E-mail opcional<input id="email" type="email" placeholder="exemplo@email.com" autocomplete="email" /></label>
+          </div>
+
+          <button class="btn primary big" id="btnCategorias">▶ Iniciar Quiz</button>
+        </article>
+
+        <aside class="card settings">
+          <h2>⚙️ Configurações de Acessibilidade</h2>
+          <p>Personalize a experiência antes ou durante o quiz.</p>
+
+          <h3>Tamanho da Fonte</h3>
+          <div class="segmented">
+            <button data-font=".92">A-</button><button class="selected" data-font="1">A</button><button data-font="1.15">A+</button>
+          </div>
+
+          <h3>Contraste</h3>
+          <div class="segmented">
+            <button class="selected" data-theme="light">☀ Claro</button><button data-theme="dark">☾ Escuro</button>
+          </div>
+
+          <h3>Áudio</h3>
+          <button class="btn muted" id="btnAudio">🔈 Áudio Desativado</button>
+
+          <div class="tip">💡 Você pode usar o botão <b>Ler pergunta</b> durante o quiz.</div>
+        </aside>
+      </div>
+
+      <section class="resources">
+        <h2>Recursos de acessibilidade</h2>
+        <div><span>👥 Acessível para todos</span><span>🔊 Leitor de voz</span><span>🎨 Alto contraste</span><span>⌨️ Navegação por teclado</span></div>
+      </section>
+    </section>
+
+    <section id="categories" class="screen">
+      <article class="card wide">
+        <div class="center-title"><span class="badge">2. Tela de Categorias</span><h2>Escolha uma categoria</h2><p>Selecione o tema que deseja aprender.</p></div>
+        <div id="categoryGrid" class="category-grid"></div>
+        <div class="tip green">❔ Dica: responda no seu próprio ritmo. O quiz não tem tempo limite.</div>
+        <button class="btn outline" onclick="app.home()">‹ Voltar</button>
+      </article>
+    </section>
+
+    <section id="quiz" class="screen">
+      <div class="quiz-grid">
+        <article class="card question-card">
+          <div class="question-top"><b id="questionCategory">Categoria</b><b id="questionCounter">Pergunta 1 de 5</b></div>
+          <div class="progress"><span id="progressBar"></span></div>
+          <h2 id="questionTitle">Pergunta</h2>
+          <div class="question-actions"><button id="btnRead" class="mini">🔊 Ler pergunta</button><button id="btnRepeat" class="mini">↻ Repetir</button></div>
+          <div id="answerList" class="answer-list"></div>
+          <div class="tip">⏱ Tempo opcional — responda com calma.</div>
+        </article>
+        <aside class="card side">
+          <h3>Acessibilidade rápida</h3>
+          <button id="btnFontQuick" class="btn muted">Aumentar fonte Aa</button>
+          <button class="btn outline" onclick="app.categories()">‹ Voltar</button>
+          <div class="score"><span>Acertos até agora</span><strong id="liveScore">0</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="result" class="screen">
+      <article class="card result-card">
+        <span class="badge">4. Tela de Resultado</span><h2 id="resultTitle">Parabéns!</h2><p>Você concluiu o quiz.</p>
+        <div class="result-grid"><div class="box green-box"><span>Você acertou</span><strong id="resultCorrect">0</strong><small id="resultTotal">de 0</small></div><div class="box blue-box"><span>Sua pontuação</span><strong id="resultPercent">0%</strong><small id="resultPoints">0 pontos</small></div></div>
+        <div id="resultMessage" class="result-msg">⭐ Bom trabalho! Você está aprendendo!</div>
+        <div class="result-actions"><button class="btn primary" onclick="app.categories()">↻ Jogar novamente</button><button class="btn outline" onclick="app.home()">🏠 Voltar ao início</button></div>
+      </article>
+      <article class="card wide history"><h2>📊 Histórico de Tentativas</h2><div id="historyList"></div></article>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>
