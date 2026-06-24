@@ -1,0 +1,1 @@
+const express = require('express'); const controller = require('../controllers/quizController'); const router = express.Router(); router.get('/iniciar', controller.iniciar); router.post('/finalizar', controller.finalizar); router.get('/tentativas', controller.listarTentativas); router.get('/tentativas/:id', controller.resultado); module.exports = router;

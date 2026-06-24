@@ -1,0 +1,10 @@
+require('dotenv').config();
+const express = require('express'); const cors = require('cors'); const helmet = require('helmet'); const rateLimit = require('express-rate-limit'); const morgan = require('morgan'); const path = require('path');
+const categoriaRoutes = require('./routes/categoriaRoutes'); const perguntaRoutes = require('./routes/perguntaRoutes'); const alternativaRoutes = require('./routes/alternativaRoutes'); const quizRoutes = require('./routes/quizRoutes'); const sanitizeRequest = require('./middlewares/sanitizeRequest'); const errorHandler = require('./middlewares/errorHandler');
+const app = express();
+app.use(helmet({ contentSecurityPolicy: false })); app.use(cors()); app.use(express.json()); app.use(express.urlencoded({ extended: true })); app.use(sanitizeRequest); app.use(morgan('dev'));
+app.use('/api', rateLimit({ windowMs: 15 * 60 * 1000, limit: 100, standardHeaders: true, legacyHeaders: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/api/health', (req, res) => res.json({ status: 'online', projeto: 'GeoInclusivo', ambiente: process.env.NODE_ENV || 'development' }));
+app.use('/api/categorias', categoriaRoutes); app.use('/api/perguntas', perguntaRoutes); app.use('/api/alternativas', alternativaRoutes); app.use('/api/quiz', quizRoutes);
+app.use((req, res) => res.status(404).json({ erro: true, mensagem: 'Rota não encontrada.' })); app.use(errorHandler); module.exports = app;

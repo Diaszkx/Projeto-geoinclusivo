@@ -1,0 +1,83 @@
+{
+  "info": {
+    "name": "GeoInclusivo API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "Listar categorias",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/categorias"
+      }
+    },
+    {
+      "name": "Criar categoria",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Continentes\",\n  \"descricao\": \"Perguntas sobre continentes\"\n}"
+        },
+        "url": "{{baseUrl}}/api/categorias"
+      }
+    },
+    {
+      "name": "Listar perguntas",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/perguntas"
+      }
+    },
+    {
+      "name": "Iniciar quiz",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/quiz/iniciar"
+      }
+    },
+    {
+      "name": "Finalizar quiz",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuario\": {\n    \"nome\": \"Gustavo\",\n    \"email\": \"gustavo@email.com\"\n  },\n  \"respostas\": [\n    {\n      \"pergunta_id\": 1,\n      \"alternativa_id\": 1\n    },\n    {\n      \"pergunta_id\": 2,\n      \"alternativa_id\": 5\n    }\n  ]\n}"
+        },
+        "url": "{{baseUrl}}/api/quiz/finalizar"
+      }
+    },
+    {
+      "name": "Listar tentativas",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/quiz/tentativas"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
