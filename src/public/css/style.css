@@ -1,28 +1,702 @@
-PRAGMA foreign_keys = ON;
-INSERT OR IGNORE INTO categorias (id, nome, descricao) VALUES
-(1, 'Capitais', 'Identifique as capitais dos países e dos estados.'),
-(2, 'Biomas', 'Conheça os biomas brasileiros e suas características.'),
-(3, 'Mapas', 'Aprenda localização e interpretação de mapas.'),
-(4, 'Bandeiras', 'Reconheça bandeiras de países do mundo.'),
-(5, 'Clima', 'Aprenda sobre climas e fenômenos naturais.'),
-(6, 'Continentes', 'Conheça os continentes e suas características.');
+:root {
+  --bg: #eef6ff;
+  --card: #ffffff;
+  --text: #172033;
+  --muted: #5e6c84;
+  --primary: #2364f6;
+  --primary-dark: #184bbd;
+  --green: #17a34a;
+  --yellow: #f6c343;
+  --purple: #8b5cf6;
+  --red: #e5484d;
+  --border: #d6e5ff;
+  --shadow: 0 18px 45px rgba(35, 100, 246, 0.12);
+  --radius: 24px;
+  --font-scale: 1;
+}
 
-INSERT OR IGNORE INTO usuarios (id, nome, email, tipo) VALUES
-(1, 'Aluno Teste', 'aluno@teste.com', 'estudante'),
-(2, 'Administrador', 'admin@teste.com', 'admin');
+* {
+  box-sizing: border-box;
+}
 
-INSERT OR IGNORE INTO perguntas (id, categoria_id, enunciado, dificuldade, ativa) VALUES
-(1,1,'Qual é a capital do Brasil?','facil',1),(2,1,'Qual é a capital do Rio Grande do Sul?','facil',1),(3,1,'Qual é a capital da Argentina?','facil',1),(4,1,'Qual é a capital da França?','facil',1),(5,1,'Qual é a capital do Japão?','medio',1),
-(6,2,'Qual bioma ocupa grande parte da região Norte do Brasil?','facil',1),(7,2,'Qual bioma é conhecido por vegetação rasteira e clima semiárido?','medio',1),(8,2,'Qual bioma brasileiro está muito presente no Rio Grande do Sul?','medio',1),(9,2,'Qual bioma é conhecido por áreas alagadas e grande biodiversidade?','medio',1),(10,2,'Qual bioma possui árvores retorcidas e clima tropical sazonal?','medio',1),
-(11,3,'Em um mapa, o que a escala representa?','medio',1),(12,3,'Qual instrumento indica os pontos cardeais?','facil',1),(13,3,'Qual ponto cardeal fica onde o Sol nasce aproximadamente?','facil',1),(14,3,'O que é uma legenda em um mapa?','facil',1),(15,3,'Qual linha imaginária divide a Terra em hemisfério Norte e Sul?','medio',1),
-(16,4,'Qual país tem uma bandeira com uma folha de bordo?','facil',1),(17,4,'A bandeira verde e amarela com círculo azul pertence a qual país?','facil',1),(18,4,'A bandeira com listras vermelhas e brancas e estrelas pertence a qual país?','facil',1),(19,4,'A bandeira branca com um círculo vermelho pertence a qual país?','facil',1),(20,4,'A bandeira azul, branca e vermelha em três faixas verticais pertence a qual país?','medio',1),
-(21,5,'Qual clima é caracterizado por temperaturas elevadas e pouca chuva?','medio',1),(22,5,'Qual fenômeno é formado por ventos muito fortes em rotação?','medio',1),(23,5,'Qual camada de gases envolve a Terra?','facil',1),(24,5,'Qual estação do ano costuma ser mais fria?','facil',1),(25,5,'Qual fenômeno ocorre quando não chove por muito tempo?','facil',1),
-(26,6,'Qual é o maior continente do mundo?','facil',1),(27,6,'Em qual continente fica o Brasil?','facil',1),(28,6,'Qual continente é conhecido por ter muitos países e grande diversidade cultural?','medio',1),(29,6,'Qual continente é coberto por gelo e fica no extremo sul do planeta?','facil',1),(30,6,'Qual continente abriga o deserto do Saara?','medio',1);
+html {
+  font-size: calc(16px * var(--font-scale));
+}
 
-INSERT OR IGNORE INTO alternativas (id, pergunta_id, texto, correta) VALUES
-(1,1,'Brasília',1),(2,1,'São Paulo',0),(3,1,'Rio de Janeiro',0),(4,1,'Salvador',0),(5,2,'Porto Alegre',1),(6,2,'Canoas',0),(7,2,'Pelotas',0),(8,2,'Caxias do Sul',0),(9,3,'Buenos Aires',1),(10,3,'Santiago',0),(11,3,'Montevidéu',0),(12,3,'Lima',0),(13,4,'Paris',1),(14,4,'Londres',0),(15,4,'Roma',0),(16,4,'Madri',0),(17,5,'Tóquio',1),(18,5,'Pequim',0),(19,5,'Seul',0),(20,5,'Bangkok',0),
-(21,6,'Amazônia',1),(22,6,'Pampa',0),(23,6,'Caatinga',0),(24,6,'Pantanal',0),(25,7,'Caatinga',1),(26,7,'Amazônia',0),(27,7,'Mata Atlântica',0),(28,7,'Pantanal',0),(29,8,'Pampa',1),(30,8,'Cerrado',0),(31,8,'Amazônia',0),(32,8,'Caatinga',0),(33,9,'Pantanal',1),(34,9,'Pampa',0),(35,9,'Cerrado',0),(36,9,'Caatinga',0),(37,10,'Cerrado',1),(38,10,'Pantanal',0),(39,10,'Pampa',0),(40,10,'Amazônia',0),
-(41,11,'A relação entre a distância no mapa e a distância real',1),(42,11,'A cor dos países',0),(43,11,'O nome dos rios',0),(44,11,'A quantidade de cidades',0),(45,12,'Bússola',1),(46,12,'Termômetro',0),(47,12,'Relógio',0),(48,12,'Barômetro',0),(49,13,'Leste',1),(50,13,'Oeste',0),(51,13,'Sul',0),(52,13,'Norte',0),(53,14,'Explicação dos símbolos usados no mapa',1),(54,14,'Lista de países',0),(55,14,'Nome do oceano',0),(56,14,'Número de habitantes',0),(57,15,'Linha do Equador',1),(58,15,'Trópico de Capricórnio',0),(59,15,'Meridiano de Greenwich',0),(60,15,'Círculo Polar Ártico',0),
-(61,16,'Canadá',1),(62,16,'Estados Unidos',0),(63,16,'Austrália',0),(64,16,'Nova Zelândia',0),(65,17,'Brasil',1),(66,17,'Portugal',0),(67,17,'México',0),(68,17,'Itália',0),(69,18,'Estados Unidos',1),(70,18,'Canadá',0),(71,18,'França',0),(72,18,'Japão',0),(73,19,'Japão',1),(74,19,'China',0),(75,19,'Coreia do Sul',0),(76,19,'Índia',0),(77,20,'França',1),(78,20,'Alemanha',0),(79,20,'Brasil',0),(80,20,'Argentina',0),
-(81,21,'Desértico',1),(82,21,'Polar',0),(83,21,'Temperado',0),(84,21,'Oceânico',0),(85,22,'Tornado',1),(86,22,'Geada',0),(87,22,'Neblina',0),(88,22,'Orvalho',0),(89,23,'Atmosfera',1),(90,23,'Litosfera',0),(91,23,'Hidrosfera',0),(92,23,'Biosfera',0),(93,24,'Inverno',1),(94,24,'Verão',0),(95,24,'Primavera',0),(96,24,'Outono',0),(97,25,'Seca',1),(98,25,'Enchente',0),(99,25,'Neve',0),(100,25,'Granizo',0),
-(101,26,'Ásia',1),(102,26,'Europa',0),(103,26,'Oceania',0),(104,26,'América do Sul',0),(105,27,'América do Sul',1),(106,27,'África',0),(107,27,'Europa',0),(108,27,'Ásia',0),(109,28,'Europa',1),(110,28,'Antártida',0),(111,28,'Oceania',0),(112,28,'América do Norte',0),(113,29,'Antártida',1),(114,29,'África',0),(115,29,'Europa',0),(116,29,'Ásia',0),(117,30,'África',1),(118,30,'Europa',0),(119,30,'Oceania',0),(120,30,'América do Sul',0);
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(35, 100, 246, .16), transparent 32rem),
+    linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
+  color: var(--text);
+}
+
+body.dark {
+  --bg: #101827;
+  --card: #172033;
+  --text: #f8fbff;
+  --muted: #c7d2e5;
+  --border: #315a9f;
+  --shadow: 0 18px 45px rgba(0, 0, 0, .35);
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,.93);
+  border-bottom: 4px solid var(--primary);
+  backdrop-filter: blur(10px);
+}
+
+.dark .topbar {
+  background: rgba(16,24,39,.93);
+}
+
+.topbar-content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #78d4ff, var(--primary));
+  font-size: 1.9rem;
+  box-shadow: var(--shadow);
+}
+
+.logo strong {
+  display: block;
+  color: var(--primary);
+  font-size: 1.6rem;
+}
+
+.logo span {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.nav-steps {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-steps span {
+  padding: 8px 12px;
+  color: var(--muted);
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.nav-steps span.active {
+  color: var(--primary);
+  background: #e2ecff;
+}
+
+.dark .nav-steps span.active {
+  background: #243b68;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 34px 18px 70px;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+  animation: fadeIn .22s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.35fr .85fr;
+  gap: 26px;
+  align-items: stretch;
+}
+
+.hero-card,
+.access-card,
+.card,
+.quiz-card,
+.result-card,
+.history-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 30px;
+}
+
+.badge,
+.pill {
+  display: inline-flex;
+  width: fit-content;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: #e2ecff;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.dark .badge,
+.dark .pill {
+  background: #243b68;
+}
+
+.hero-card h1 {
+  max-width: 760px;
+  margin: 16px 0 12px;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.hero-card p,
+.access-card p,
+.section-title p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.hero-art {
+  position: relative;
+  min-height: 230px;
+  margin: 24px 0;
+  overflow: hidden;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #42caff 0%, #beeaff 55%, #7fdf75 56%, #33ae4b 100%);
+}
+
+.sun {
+  position: absolute;
+  top: 24px;
+  right: 70px;
+  font-size: 3rem;
+}
+
+.cloud {
+  position: absolute;
+  width: 88px;
+  height: 30px;
+  background: white;
+  border-radius: 999px;
+  opacity: .88;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 44px;
+  height: 44px;
+  top: -20px;
+  left: 14px;
+}
+
+.cloud::after {
+  width: 34px;
+  height: 34px;
+  top: -13px;
+  right: 15px;
+}
+
+.cloud-one {
+  top: 70px;
+  left: 60px;
+}
+
+.cloud-two {
+  top: 44px;
+  right: 180px;
+  transform: scale(.75);
+}
+
+.people {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  display: flex;
+  justify-content: space-around;
+  font-size: clamp(3.7rem, 7vw, 6.4rem);
+  filter: drop-shadow(0 12px 15px rgba(0,0,0,.18));
+}
+
+.ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  background: linear-gradient(180deg, #33ae4b, #178b35);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+input {
+  width: 100%;
+  padding: 14px 15px;
+  border-radius: 14px;
+  border: 1px solid #b9c7dc;
+  background: transparent;
+  color: var(--text);
+}
+
+.btn {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font-weight: 900;
+  transition: transform .15s ease, background .15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.primary:hover {
+  background: var(--primary-dark);
+}
+
+.soft {
+  background: #e9f1ff;
+  color: var(--primary);
+}
+
+.dark .soft {
+  background: #223553;
+}
+
+.outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.access-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.info-box {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #eff6ff;
+  color: var(--text);
+}
+
+.dark .info-box {
+  background: #223553;
+}
+
+.info-box ul {
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.features {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.features div {
+  padding: 18px;
+  text-align: center;
+  color: white;
+  font-weight: 900;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--primary), #42a5ff);
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.section-title > span {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: #e2ecff;
+  font-size: 1.8rem;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.section-title p {
+  margin: 6px 0 0;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.category-card {
+  min-height: 150px;
+  border: 0;
+  border-radius: 20px;
+  padding: 22px;
+  text-align: left;
+  background: #e2ecff;
+  color: var(--text);
+  box-shadow: inset 0 0 0 2px rgba(35,100,246,.16);
+  transition: transform .15s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+}
+
+.category-card:nth-child(2n) {
+  background: #e3faed;
+  box-shadow: inset 0 0 0 2px rgba(23,163,74,.18);
+}
+
+.category-card:nth-child(3n) {
+  background: #fff6d9;
+  box-shadow: inset 0 0 0 2px rgba(246,195,67,.25);
+}
+
+.dark .category-card {
+  background: #223553;
+}
+
+.category-icon {
+  display: block;
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.category-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+}
+
+.category-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.quiz-card {
+  max-width: 930px;
+  margin: 0 auto;
+}
+
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.quiz-top h2 {
+  margin: 18px 0 0;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  line-height: 1.22;
+}
+
+#contadorPergunta {
+  color: var(--green);
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+.progress {
+  height: 14px;
+  margin: 26px 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dbeafe;
+}
+
+#barraProgresso {
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  transition: width .2s ease;
+}
+
+.answers {
+  display: grid;
+  gap: 14px;
+}
+
+.answer {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 72px;
+  border: 2px solid #d6e5ff;
+  border-radius: 18px;
+  padding: 15px 18px;
+  background: #f8fbff;
+  color: var(--text);
+  text-align: left;
+  font-weight: 800;
+}
+
+.dark .answer {
+  background: #223553;
+}
+
+.answer:hover {
+  border-color: var(--primary);
+  background: #eaf2ff;
+}
+
+.dark .answer:hover {
+  background: #284365;
+}
+
+.answer-letter {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  color: white;
+  background: var(--primary);
+}
+
+.quiz-footer {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.result-card {
+  max-width: 880px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.trophy {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff6d9;
+  font-size: 3rem;
+}
+
+.result-card h2 {
+  margin: 8px 0;
+  font-size: 2.4rem;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 26px 0;
+}
+
+.result-grid div {
+  padding: 20px;
+  border-radius: 18px;
+  background: #e9f1ff;
+}
+
+.dark .result-grid div {
+  background: #223553;
+}
+
+.result-grid span {
+  display: block;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.result-grid strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--primary);
+  font-size: 2.2rem;
+}
+
+.result-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.history-card {
+  margin-top: 24px;
+}
+
+.history-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #f4f8ff;
+  border: 1px solid var(--border);
+}
+
+.dark .history-item {
+  background: #223553;
+}
+
+.history-item strong {
+  color: var(--primary);
+}
+
+.message {
+  min-height: 22px;
+  color: var(--red);
+  font-weight: 900;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(120px);
+  max-width: min(560px, calc(100% - 32px));
+  padding: 15px 18px;
+  border-radius: 14px;
+  color: white;
+  background: #172033;
+  box-shadow: var(--shadow);
+  transition: transform .2s ease;
+  z-index: 99;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 900px) {
+  .hero-grid,
+  .features,
+  .category-grid,
+  .result-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .topbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quiz-top,
+  .history-item {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 620px) {
+  .container {
+    padding: 22px 14px 50px;
+  }
+
+  .hero-card,
+  .access-card,
+  .card,
+  .quiz-card,
+  .result-card,
+  .history-card {
+    padding: 22px;
+  }
+
+  .hero-grid,
+  .features,
+  .category-grid,
+  .form-grid,
+  .result-grid,
+  .result-actions,
+  .quiz-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-steps {
+    display: none;
+  }
+
+  .people {
+    font-size: 3.5rem;
+    left: 10px;
+    right: 10px;
+  }
+}
