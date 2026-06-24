@@ -9,109 +9,179 @@
 <body>
   <header class="topbar">
     <div class="topbar-content">
-      <button class="brand" onclick="app.home()" aria-label="Voltar para o início">
-        <span class="brand-globe">🌍</span>
-        <span><strong>GeoInclusivo</strong><small>Quiz Geográfico Acessível</small></span>
-      </button>
-      <nav class="steps" aria-label="Etapas">
-        <span id="s-home" class="active">1. Início</span>
-        <span id="s-cat">2. Categorias</span>
-        <span id="s-quiz">3. Perguntas</span>
-        <span id="s-result">4. Resultado</span>
+      <div class="logo">
+        <div class="logo-icon">🌍</div>
+        <div>
+          <strong>GeoInclusivo</strong>
+          <span>Quiz Geográfico Acessível</span>
+        </div>
+      </div>
+
+      <nav class="nav-steps">
+        <span id="stepInicio" class="active">Início</span>
+        <span id="stepCategoria">Categorias</span>
+        <span id="stepQuiz">Quiz</span>
+        <span id="stepResultado">Resultado</span>
       </nav>
-      <div class="author"><span>Feito por</span><b>Gustavo Dias Lopes</b></div>
     </div>
   </header>
 
-  <main class="page">
-    <section id="home" class="screen active-screen">
-      <div class="home-grid">
-        <article class="card hero">
-          <span class="badge">Educação • Inclusão • Geografia</span>
-          <h1>Bem-vindo ao <span>GeoInclusivo!</span></h1>
-          <p>Aprenda geografia de um jeito simples, visual, acessível e interativo.</p>
+  <main class="container">
+    <section id="screenInicio" class="screen active">
+      <div class="hero-grid">
+        <article class="hero-card">
+          <div class="badge">Educação • Inclusão • Geografia</div>
+          <h1>Aprenda Geografia de forma simples, visual e interativa.</h1>
+          <p>
+            O GeoInclusivo é um quiz acessível para testar conhecimentos sobre capitais,
+            biomas, mapas e outros temas geográficos.
+          </p>
 
-          <div class="illustration" role="img" aria-label="Pessoas aprendendo geografia em um parque">
-            <span class="sun">☀️</span><span class="cloud c1"></span><span class="cloud c2"></span>
-            <div class="people"><span>👴</span><span>👧🏽</span><span>🧒🏾</span><span>👵🏻</span></div>
-            <div class="grass"></div>
+          <div class="hero-art">
+            <div class="sun">☀️</div>
+            <div class="cloud cloud-one"></div>
+            <div class="cloud cloud-two"></div>
+            <div class="people">👨‍🦱 👧🏽 👦🏻 👩🏾‍🦱</div>
+            <div class="ground"></div>
           </div>
 
           <div class="form-grid">
-            <label>Seu nome<input id="nome" placeholder="Digite seu nome" autocomplete="name" /></label>
-            <label>E-mail opcional<input id="email" type="email" placeholder="exemplo@email.com" autocomplete="email" /></label>
+            <div>
+              <label for="nome">Seu nome</label>
+              <input id="nome" type="text" placeholder="Digite seu nome" />
+            </div>
+            <div>
+              <label for="email">E-mail opcional</label>
+              <input id="email" type="email" placeholder="exemplo@email.com" />
+            </div>
           </div>
 
-          <button class="btn primary big" id="btnCategorias">▶ Iniciar Quiz</button>
+          <button id="btnContinuar" class="btn primary">Iniciar Quiz</button>
+          <p id="msgInicio" class="message"></p>
         </article>
 
-        <aside class="card settings">
-          <h2>⚙️ Configurações de Acessibilidade</h2>
-          <p>Personalize a experiência antes ou durante o quiz.</p>
+        <aside class="access-card">
+          <h2>⚙️ Acessibilidade</h2>
+          <p>Recursos simples para facilitar o uso.</p>
 
-          <h3>Tamanho da Fonte</h3>
-          <div class="segmented">
-            <button data-font=".92">A-</button><button class="selected" data-font="1">A</button><button data-font="1.15">A+</button>
+          <div class="access-actions">
+            <button id="btnFonteMenor" class="btn soft">A- Fonte menor</button>
+            <button id="btnFonteMaior" class="btn soft">A+ Fonte maior</button>
+            <button id="btnContraste" class="btn soft">☾ Alto contraste</button>
           </div>
 
-          <h3>Contraste</h3>
-          <div class="segmented">
-            <button class="selected" data-theme="light">☀ Claro</button><button data-theme="dark">☾ Escuro</button>
+          <div class="info-box">
+            <strong>Recursos:</strong>
+            <ul>
+              <li>Interface com alto contraste opcional</li>
+              <li>Botões grandes e fáceis de clicar</li>
+              <li>Quiz em etapas</li>
+              <li>Resultado salvo no histórico</li>
+            </ul>
           </div>
-
-          <h3>Áudio</h3>
-          <button class="btn muted" id="btnAudio">🔈 Áudio Desativado</button>
-
-          <div class="tip">💡 Você pode usar o botão <b>Ler pergunta</b> durante o quiz.</div>
         </aside>
       </div>
 
-      <section class="resources">
-        <h2>Recursos de acessibilidade</h2>
-        <div><span>👥 Acessível para todos</span><span>🔊 Leitor de voz</span><span>🎨 Alto contraste</span><span>⌨️ Navegação por teclado</span></div>
-      </section>
-    </section>
-
-    <section id="categories" class="screen">
-      <article class="card wide">
-        <div class="center-title"><span class="badge">2. Tela de Categorias</span><h2>Escolha uma categoria</h2><p>Selecione o tema que deseja aprender.</p></div>
-        <div id="categoryGrid" class="category-grid"></div>
-        <div class="tip green">❔ Dica: responda no seu próprio ritmo. O quiz não tem tempo limite.</div>
-        <button class="btn outline" onclick="app.home()">‹ Voltar</button>
-      </article>
-    </section>
-
-    <section id="quiz" class="screen">
-      <div class="quiz-grid">
-        <article class="card question-card">
-          <div class="question-top"><b id="questionCategory">Categoria</b><b id="questionCounter">Pergunta 1 de 5</b></div>
-          <div class="progress"><span id="progressBar"></span></div>
-          <h2 id="questionTitle">Pergunta</h2>
-          <div class="question-actions"><button id="btnRead" class="mini">🔊 Ler pergunta</button><button id="btnRepeat" class="mini">↻ Repetir</button></div>
-          <div id="answerList" class="answer-list"></div>
-          <div class="tip">⏱ Tempo opcional — responda com calma.</div>
-        </article>
-        <aside class="card side">
-          <h3>Acessibilidade rápida</h3>
-          <button id="btnFontQuick" class="btn muted">Aumentar fonte Aa</button>
-          <button class="btn outline" onclick="app.categories()">‹ Voltar</button>
-          <div class="score"><span>Acertos até agora</span><strong id="liveScore">0</strong></div>
-        </aside>
+      <div class="features">
+        <div>👥 Acessível</div>
+        <div>🧭 Educativo</div>
+        <div>📊 Resultado</div>
+        <div>💻 API integrada</div>
       </div>
     </section>
 
-    <section id="result" class="screen">
-      <article class="card result-card">
-        <span class="badge">4. Tela de Resultado</span><h2 id="resultTitle">Parabéns!</h2><p>Você concluiu o quiz.</p>
-        <div class="result-grid"><div class="box green-box"><span>Você acertou</span><strong id="resultCorrect">0</strong><small id="resultTotal">de 0</small></div><div class="box blue-box"><span>Sua pontuação</span><strong id="resultPercent">0%</strong><small id="resultPoints">0 pontos</small></div></div>
-        <div id="resultMessage" class="result-msg">⭐ Bom trabalho! Você está aprendendo!</div>
-        <div class="result-actions"><button class="btn primary" onclick="app.categories()">↻ Jogar novamente</button><button class="btn outline" onclick="app.home()">🏠 Voltar ao início</button></div>
+    <section id="screenCategoria" class="screen">
+      <article class="card">
+        <div class="section-title">
+          <span>🧭</span>
+          <div>
+            <h2>Escolha uma categoria</h2>
+            <p>Selecione um tema para iniciar o quiz.</p>
+          </div>
+        </div>
+
+        <div id="categoriasGrid" class="category-grid">
+          <p>Carregando categorias...</p>
+        </div>
+
+        <button id="btnVoltarInicio" class="btn outline">Voltar ao início</button>
+        <p id="msgCategoria" class="message"></p>
       </article>
-      <article class="card wide history"><h2>📊 Histórico de Tentativas</h2><div id="historyList"></div></article>
+    </section>
+
+    <section id="screenQuiz" class="screen">
+      <article class="quiz-card">
+        <div class="quiz-top">
+          <div>
+            <span id="categoriaAtual" class="pill">Categoria</span>
+            <h2 id="perguntaTexto">Pergunta</h2>
+          </div>
+          <strong id="contadorPergunta">1/1</strong>
+        </div>
+
+        <div class="progress">
+          <div id="barraProgresso"></div>
+        </div>
+
+        <div id="alternativas" class="answers"></div>
+
+        <div class="quiz-footer">
+          <button id="btnLer" class="btn soft">🔊 Ler pergunta</button>
+          <button id="btnVoltarCategorias" class="btn outline">Trocar categoria</button>
+        </div>
+
+        <p id="msgQuiz" class="message"></p>
+      </article>
+    </section>
+
+    <section id="screenResultado" class="screen">
+      <article class="result-card">
+        <div class="trophy">🏆</div>
+        <h2>Resultado Final</h2>
+        <p id="fraseResultado">Quiz finalizado com sucesso.</p>
+
+        <div class="result-grid">
+          <div>
+            <span>Pontuação</span>
+            <strong id="resultadoPontuacao">0</strong>
+          </div>
+          <div>
+            <span>Acertos</span>
+            <strong id="resultadoAcertos">0</strong>
+          </div>
+          <div>
+            <span>Erros</span>
+            <strong id="resultadoErros">0</strong>
+          </div>
+          <div>
+            <span>Total</span>
+            <strong id="resultadoTotal">0</strong>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button id="btnNovoQuiz" class="btn primary">Fazer outro quiz</button>
+          <button id="btnInicio" class="btn outline">Voltar ao início</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="history-card">
+      <div class="section-title">
+        <span>📊</span>
+        <div>
+          <h2>Histórico de Tentativas</h2>
+          <p>Últimas tentativas registradas no banco de dados.</p>
+        </div>
+      </div>
+
+      <button id="btnAtualizarHistorico" class="btn soft">Atualizar histórico</button>
+      <div id="historico" class="history-list"></div>
     </section>
   </main>
 
   <div id="toast" class="toast"></div>
+
   <script src="/js/app.js"></script>
 </body>
 </html>
