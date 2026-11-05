@@ -1,24 +1,31 @@
-# GeoInclusivo
+# GeoInclusivo - Refatoração para React
 
-Sistema web de quiz geográfico acessível, desenvolvido para a disciplina de Programação 4.
+Sistema web de quiz geográfico acessível desenvolvido para Programação 4. Esta versão reorganiza o projeto como **monorepo simples**, mantendo a API existente em Node.js/Express/SQLite e refatorando o frontend para **React + Vite**.
 
-## Funcionalidades
-- CRUD de categorias
-- CRUD de perguntas
-- CRUD de alternativas
-- Quiz com perguntas e alternativas
-- Registro de tentativas
-- Cálculo de pontuação
-- Histórico de tentativas
-- Frontend consumindo a API
+## Estrutura
 
-## Tecnologias
-Node.js, Express.js, SQLite, HTML, CSS, JavaScript, Helmet, Express Rate Limit e Morgan.
+- `backend/`: API REST, regras de negócio e banco SQLite.
+- `frontend/`: interface React/Vite que consome a API.
+- `docs/`: documentação das rotas e deploy.
+- `postman/`: coleção de testes da API.
+- `BACKLOG.md`: backlog da refatoração.
 
-## Instalação
+## Funcionalidades preservadas
+
+- Categorias, perguntas e alternativas pela API.
+- Quiz por categoria, com até 5 perguntas na interface.
+- Registro de tentativas, pontuação e histórico.
+- Aumento/redução de fonte, alto contraste e leitura da pergunta em voz alta.
+- Mensagens de erro e estados de carregamento.
+
+## Requisitos
+
+- Node.js 18+ e npm.
+
+## 1. Executar o backend
+
 ```bash
-git clone https://github.com/seu-usuario/geoinclusivo.git
-cd geoinclusivo
+cd backend
 npm install
 cp .env.example .env
 npm run db:init
@@ -26,21 +33,42 @@ npm run db:seed
 npm run dev
 ```
 
-Acesse: `http://localhost:3000`
+API: `http://localhost:3000`  
+Teste: `GET http://localhost:3000/api/health`
+
+## 2. Executar o frontend
+
+Em outro terminal:
+
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+O Vite informará a URL local, normalmente `http://localhost:5173`.
+
+O frontend usa `VITE_API_URL=http://localhost:3000` e consome dados reais, incluindo `GET /api/categorias`.
+
+## Build do frontend
+
+```bash
+cd frontend
+npm run build
+```
+
+## Decisão de arquitetura
+
+Foi escolhido o monorepo para manter backend e frontend no mesmo histórico Git e, ao mesmo tempo, separar responsabilidades. Isso facilita a execução local, a revisão da atividade e a configuração explícita da comunicação HTTP/CORS entre React e API.
 
 ## Documentação
+
 - Rotas da API: `docs/rotas-api.md`
 - Deploy: `docs/deploy.md`
-- Coleção Postman: `postman/geoinclusivo.postman_collection.json`
-
-## Segurança
-- Helmet
-- Express Rate Limit
-- Sanitização básica de entradas
-- `.env` fora do repositório
-
-## Logs
-O projeto usa Morgan para registrar requisições no terminal.
+- Postman: `postman/geoinclusivo.postman_collection.json`
+- Backlog: `BACKLOG.md`
 
 ## Autor
+
 Gustavo Dias Lopes
