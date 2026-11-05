@@ -1,3 +1,4 @@
+import React from 'react';
 export default function AccessibilityPanel({ fontScale, setFontScale, highContrast, setHighContrast }) {
   return <aside className="access-card" aria-labelledby="access-title">
     <div className="access-symbol" aria-hidden="true">✳</div>
